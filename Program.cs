@@ -1,34 +1,36 @@
-﻿using System;
+using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ConsoleApp2
 {
     class Calculadora
     {
-        public decimal numero;
-        public decimal[] numeros;
+        public int[] numeros;
 
-        public Calculadora(decimal[] numeros1)
+        public Calculadora(int[] numeros1)
         {
             numeros = numeros1;
         }
 
-        public void Adicao(decimal[] numeros)
-        {
-            decimal resultado = 0;
+        public Calculadora() { }
 
-            foreach(decimal numero in numeros)
+        public void Adicao(int[] numeros)
+        {
+            int resultado = 0;
+
+            foreach (int numero in numeros)
                 resultado += numero;
 
             Console.WriteLine("O resultado da adição é: " + resultado);
         }
 
-        public void Subtracao(decimal[] numeros)
+        public void Subtracao(int[] numeros)
         {
-            decimal resultado = 0;
+            int resultado = 0;
 
-            for(int i = 0; i < numeros.Length; i++)
+            for (int i = 0; i < numeros.Length; i++)
             {
-                if(i == 0)
+                if (i == 0)
                     resultado = numeros[i];
                 else
                     resultado -= numeros[i];
@@ -37,19 +39,19 @@ namespace ConsoleApp2
             Console.WriteLine("O resultado da subtração é: " + resultado);
         }
 
-        public void Multiplicacao(decimal[] numeros)
+        public void Multiplicacao(int[] numeros)
         {
-            decimal resultado = 1;
+            int resultado = 1;
 
-            foreach(decimal numero in numeros)
+            foreach (int numero in numeros)
                 resultado *= numero;
 
             Console.WriteLine("O resultado da multiplicação é: " + resultado);
         }
 
-        public void Divisao(decimal[] numeros)
+        public void Divisao(int[] numeros)
         {
-            decimal resultado = 0;
+            double resultado = 0;
 
             for (int i = 0; i < numeros.Length; i++)
             {
@@ -66,9 +68,21 @@ namespace ConsoleApp2
 
     class Cientifica : Calculadora
     {
-        public void Extrair(numero)
+        public int numero;
+
+        public Cientifica(int numero1)
+        {
+            numero = numero1;
+        }
+
+        public void Extrair(int numero)
         {
 
+            Convert.ToDouble(numero);
+
+            double resultado = Math.Sqrt(numero);
+
+            Console.WriteLine("A raiz quadrada de " + numero + " é: " + resultado);
         }
     }
 
@@ -96,34 +110,39 @@ namespace ConsoleApp2
 
         static int Main(string[] args)
         {
-            while(true)
+            while (true)
             {
                 int escolha = Menu();
 
-                decimal numero = 0;
-                decimal[] numeros = new decimal[10000];
+                int numero = 0;
+                int[] numeros = { 1 };
 
-                if(escolha == 5)
+                if (escolha == 5)
                 {
                     Console.Write("Insira um número: ");
-                    numero = Convert.ToDecimal(Console.ReadLine());
+                    numero = Convert.ToInt32(Console.ReadLine());
                 }
                 else
                 {
-                    Console.WriteLine("Insira um conjunto de números: ");
-                    for(int i = 0; i < i++; i++)
-                    {
-                        Console.Write("Número (" + (i++) + "): ");
+                    Console.WriteLine("Quantos números vai inserir: ");
+                    int quant = Convert.ToInt32(Console.ReadLine());
 
+                    numeros = new int[quant];
+
+                    Console.WriteLine("\nInsira um conjunto de números: ");
+                    for (int i = 0; i < quant; i++)
+                    {
+                        Console.Write("Número (" + i + "): ");
+                        numeros[i] = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine();
                     }
                 }
 
                 Calculadora oper = new Calculadora(numeros);
 
-                Calculadora raiz = new Cientifica(numero);
+                Cientifica raiz = new Cientifica(numero);
 
-                switch(escolha)
+                switch (escolha)
                 {
                     case 1:
                         oper.Adicao(numeros);
@@ -142,7 +161,7 @@ namespace ConsoleApp2
                         break;
 
                     case 5:
-                        
+                        raiz.Extrair(numero);
                         break;
 
                     case 6:
